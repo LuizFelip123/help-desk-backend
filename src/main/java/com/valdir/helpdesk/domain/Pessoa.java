@@ -1,23 +1,44 @@
 package com.valdir.helpdesk.domain;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.helpdesk.domain.enums.Perfil;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of={"id","cpf"})
-public abstract class Pessoa {
+@Entity
+public abstract class Pessoa implements  Serializable {
+
+    private static final long serialVersionUID = 1l;
+    
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+    @Column(unique=true)
     protected String email;
     protected String senha;
+    @Column(unique=true)
     protected String cpf;
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="PERFIS")
     protected Set<Integer> perfis = new HashSet<>();
+    @JsonFormat(pattern="dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
     public Pessoa(){
