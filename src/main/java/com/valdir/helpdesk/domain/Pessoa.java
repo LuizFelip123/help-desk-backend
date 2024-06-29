@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of={"id","cpf"})
 @Entity
+@Data
 public abstract class Pessoa implements  Serializable {
 
     private static final long serialVersionUID = 1l;

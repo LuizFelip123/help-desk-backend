@@ -5,6 +5,8 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
+@Data
 @Entity
 public class Tecnico extends Pessoa {
     @OneToMany(mappedBy="tecnico")
