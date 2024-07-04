@@ -10,19 +10,26 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.helpdesk.domain.Tecnico;
 import com.valdir.helpdesk.domain.enums.Perfil;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
-import lombok.Setter;
-
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 public class TecnicoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     protected  Integer id;
+    @NotBlank(message="O campo Nome é requerido")
     protected String nome;
+    
+    @NotBlank(message="O campo EMAIL é requerido")
     protected String email;
+    
+    @NotBlank(message="O campo Senha é requerido")
     protected String senha;
+    
+    @NotBlank(message="O campo CPF é requerido")
     protected String cpf;
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
