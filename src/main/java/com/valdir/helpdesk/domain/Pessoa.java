@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.helpdesk.domain.enums.Perfil;
 
@@ -37,6 +39,7 @@ public abstract class Pessoa implements  Serializable {
     @Column(unique=true)
     protected String email;
     protected String senha;
+    @CPF
     @Column(unique=true)
     protected String cpf;
     @ElementCollection(fetch=FetchType.EAGER)
