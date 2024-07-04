@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.valdir.helpdesk.domain.enums.Perfil;
@@ -15,6 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,6 +41,7 @@ public abstract class Pessoa implements  Serializable {
     protected String cpf;
     @ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(name="PERFIS")
+    @Getter(AccessLevel.NONE)
     protected Set<Integer> perfis = new HashSet<>();
     @JsonFormat(pattern="dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
@@ -57,5 +60,8 @@ public abstract class Pessoa implements  Serializable {
     public void addPerfil(Perfil perfil){
         perfis.add(perfil.getCodigo());
     }
+    public Set<Perfil> getperfis(){
+        return perfis.stream().map(x-> Perfil.toEnum(x)).collect(Collectors.toSet());
+    } 
 
 }
