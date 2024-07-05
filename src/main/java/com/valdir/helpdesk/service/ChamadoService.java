@@ -1,5 +1,6 @@
 package com.valdir.helpdesk.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +46,9 @@ public class ChamadoService {
         Chamado chamado = new Chamado();
         if(chamado.getId() != null){
             chamado.setId(obj.getId());
+        } 
+        if(obj.getStatus().equals(2)){
+            chamado.setDataFechamento(LocalDate.now());
         }
         chamado.setTecnico(tecnico);
         chamado.setCliente(cliente);
@@ -54,4 +58,11 @@ public class ChamadoService {
         chamado.setObservacoes(obj.getObservacoes());
         return chamado;
     }    
+
+    public Chamado update(Integer id, ChamadoDTO objDTO) {
+        objDTO.setId(id);
+        Chamado chamado = findById(id);
+        chamado = newChamado(objDTO);
+        return chamadoRepository.save(chamado);
+    }
 }
