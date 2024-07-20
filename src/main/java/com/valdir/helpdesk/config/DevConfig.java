@@ -12,8 +12,7 @@ import com.valdir.helpdesk.service.DBService;
 @Configuration
 @Profile("dev")
 public class DevConfig {
-    @Autowired
-    private DBService dBService;
+ 
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String value;
@@ -21,8 +20,8 @@ public class DevConfig {
     @Bean
     public boolean instanciaDB(){
         if(value.equals("create")){
-            this.dBService.instanciaDB();
-   
+
+
         }
        return false; 
     }

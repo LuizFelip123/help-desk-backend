@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.valdir.helpdesk.domain.Pessoa;
@@ -16,7 +17,9 @@ import com.valdir.helpdesk.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class TecnicoService {
-
+    @Autowired
+	private BCryptPasswordEncoder encoder;
+    
     @Autowired
     private TecnicoRepository tecnicoRepository;
     @Autowired
@@ -32,6 +35,7 @@ public class TecnicoService {
 
     public Tecnico create(TecnicoDTO tecnicoDTO) {
         tecnicoDTO.setId(null);
+        tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
         validaPorCpfEmail(tecnicoDTO);
         Tecnico tecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(tecnico);

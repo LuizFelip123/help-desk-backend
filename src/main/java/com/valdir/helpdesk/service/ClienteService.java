@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.valdir.helpdesk.domain.Cliente;
@@ -16,7 +17,9 @@ import com.valdir.helpdesk.service.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
-
+    @Autowired
+	private BCryptPasswordEncoder encoder;
+    
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
@@ -32,6 +35,7 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO clienteDTO) {
         clienteDTO.setId(null);
+        clienteDTO.setSenha(encoder.encode(clienteDTO.getSenha()));
         validaPorCpfEmail(clienteDTO);
         Cliente cliente = new Cliente(clienteDTO);
         return clienteRepository.save(cliente);
