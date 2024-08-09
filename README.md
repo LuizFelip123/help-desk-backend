@@ -50,8 +50,8 @@ public interface ProdutoRepository extends CrudRepository<Produto, Long> {}
 ```
 
 
-## A camada de controlador
+## A camada de Resource/controlador
 
-A classe do controlador depende de alguns dos principais recursos do Spring MVC. Vamos começar com os métodos `mostrarFormularioProduto()` e `addProduto()` do controlador .
+A classe do controlador/resource onde encontra-se os breakpoints  para acessar os recursos principais da Api . 
 
 
