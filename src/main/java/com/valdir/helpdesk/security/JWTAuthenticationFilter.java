@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,7 +25,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JWTAuthenticationFilter(JWTUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/login"); // Define o endpoint para login
+        setFilterProcessesUrl("/api/login"); // Define o endpoint para login
     }
 
     @Override
@@ -47,9 +46,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException{
         String username = ((UserSS) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
-        response.setHeader("access-control-headers", "Authorization");
-        response.setHeader( "Authorization", "Bearer"+token);
-         
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, enctype, Location");
+        response.setHeader("Authorization", "Bearer " + token);     
     }
 
     @Override
@@ -59,13 +59,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().append(json());
     }
 
-    private CharSequence json(){
-        long date = new Date().getTime();
-        return "{"
-                +"\"timestamp\": "+date+","
-                +"\"status\": 401, "
-                +"\"error\": \"Não autorizado\", "
-                +"\"message\": \"Email ou senha inválidos\","
-                +"\"path\": \"/login\"}";
-    }
+    private CharSequence json() {
+		long date = new Date().getTime();
+		return "{"
+				+ "\"timestamp\": " + date + ", " 
+				+ "\"status\": 401, "
+				+ "\"error\": \"Não autorizado\", "
+				+ "\"message\": \"Email ou senha inválidos\", "
+				+ "\"path\": \"/login\"}";
+	}
 }

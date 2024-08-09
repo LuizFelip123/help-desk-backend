@@ -23,7 +23,7 @@ import com.valdir.helpdesk.service.ClienteService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente")
 public class ClienteResource {
 
     @Autowired

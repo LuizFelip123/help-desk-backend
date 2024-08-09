@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/chamados")
+@RequestMapping("/api/chamados")
 public class ChamadoResource {
     @Autowired
     private ChamadoService chamadoService;
